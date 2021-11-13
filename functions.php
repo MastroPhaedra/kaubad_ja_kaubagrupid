@@ -18,7 +18,7 @@ function countyData($sort_by = "kaubanimi", $search_term = "") {
 
     FROM kaubad, kaubagrupid 
 
-    WHERE kaubad.xxx = kaubagrupid.id 
+    WHERE kaubad.kaubagrupp_id = kaubagrupid.id 
 
     AND (kaubanimi LIKE '%$search_term%' OR hind LIKE '%$search_term%' OR kaubagrupp LIKE '%$search_term%')
 
@@ -92,7 +92,7 @@ function addProduct($product_name, $price, $productGroup_id) {
 
     global $connection;
 
-    $query = $connection->prepare("INSERT INTO kaubad (kaubanimi, hind, kaubagrupid.id)
+    $query = $connection->prepare("INSERT INTO kaubad (kaubanimi, hind, kaubagrupp_id)
 
     VALUES (?, ?, ?)");
 
@@ -121,7 +121,7 @@ function saveProduct($product_id, $product_name, $price, $productGroup_id) {
 
     $query = $connection->prepare("UPDATE kaubad
 
-    SET kaubanimi=?, hind=?, kaubagrupid.id=?
+    SET kaubanimi=?, hind=?, kaubagrupp_id=?
 
     WHERE kaubad.id=?");
 
