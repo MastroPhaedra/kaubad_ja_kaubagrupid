@@ -115,17 +115,17 @@ function deleteProduct($product_id) {
 
 }
 
-function savePerson($person_id, $first_name, $last_name, $county_id) {
+function saveProduct($product_id, $product_name, $price, $productGroup_id) {
 
     global $connection;
 
-    $query = $connection->prepare("UPDATE inimene
+    $query = $connection->prepare("UPDATE kaubad
 
-    SET eesnimi=?, perekonnanimi=?, maakonna_id=?
+    SET kaubanimi=?, hind=?, kaubagrupid.id=?
 
-    WHERE inimene.id=?");
+    WHERE kaubad.id=?");
 
-    $query->bind_param("ssii", $first_name, $last_name, $county_id, $person_id);
+    $query->bind_param("sdii", $product_name, $price, $productGroup_id, $product_id);
 
     $query->execute();
 
