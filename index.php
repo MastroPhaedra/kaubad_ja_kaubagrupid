@@ -1,5 +1,4 @@
 <?php
-
 // nastraivaem podklju4enie k baze dannqh
 require("conf.php");
 //session_start();
@@ -26,14 +25,20 @@ if(isset($_REQUEST["search_term"])) {
 // dobavlenie novoi grupq tovarov
 if(isset($_REQUEST["kaubagrupi_lisamine"])&&!empty($_REQUEST["kaubagrupp"])) {
     addProductGroup($_REQUEST["kaubagrupp"]);
-    header("Location: index.php");
+    //header("Location: https://makarov20.thkit.ee/PHP/phpLehestik/content/kaubad_ja_kaubagrupid/index.php");
+    //header:("Location: ".$_SERVER["PHP_SELF"]);  //$_SERVER['REQUEST_URI'] $_SERVER["PHP_SELF"]
+    echo "<script>self.location='https://makarov20.thkit.ee/PHP/phpLehestik/content/kaubad_ja_kaubagrupid/index.php';</script>"; //pereadressatsia s pomoshju JS
+    //echo "<meta http-equiv='Location' content='http://example.com/final.php'>" //pereadressatsia s pomoshju HTML
     exit();
 }
 
 // dobavlenie novogo tovara
 if(isset($_REQUEST["kauba_lisamine"])&&!empty($_REQUEST["kaubanimi"])&&!empty($_REQUEST["hind"])) {
     addProduct($_REQUEST["kaubanimi"], $_REQUEST["hind"], $_REQUEST["kaubagrupp_id"]);
-    header("Location: index.php");
+    //header("Location: index.php");
+    //header:("Location: $_SERVER[PHP_SELF]");
+    echo "<script>self.location='https://makarov20.thkit.ee/PHP/phpLehestik/content/kaubad_ja_kaubagrupid/index.php';</script>"; //pereadressatsia s pomoshju JS
+    //echo "<meta http-equiv='Location' content='http://example.com/final.php'>" //pereadressatsia s pomoshju HTML
     exit();
 }
 
@@ -46,25 +51,29 @@ if(isset($_REQUEST["delete"])) {
 if(isset($_REQUEST["save"])) {
     saveProduct($_REQUEST["changed_id"], $_REQUEST["kaubanimi"], $_REQUEST["hind"], $_REQUEST["kaubagrupp_id"]);
 }
-$product = countyData($sort, $search_term);
-?>
+$product = countyData($sort, $search_term);?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
+    <!--<link rel="stylesheet" type="text/css" href="../../style/php_style.css">-->
     <title>Kaubad ja Kaubagrupid</title>
 </head>
 <body>
 <header class="header">
+    <!-- <div class="header">  <header>  -->
     <p>Admin on sisse logitud</p> <!-- avtorizatsia -->
     <form action="logout.php" method="post">
         <input type="submit" value="Logi välja" name="logout">
-    </form>
+    </form><!--  </header> -->
     <div class="container">
         <h1>Tabelid | Kaubad ja Kaubagrupid</h1>
     </div>
 </header>
+<?php
+include('../php_matkaLeht/matk_navigation.php');
+?>
 <main class="main">
     <div class="container">
         <form action="index.php">
@@ -137,5 +146,8 @@ $product = countyData($sort, $search_term);
         </form>
     </div>
 </main>
+<?php
+include('../../footer.php');
+?>
 </body>
 </html>
