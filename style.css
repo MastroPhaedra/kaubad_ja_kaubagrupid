@@ -9,13 +9,6 @@ body,
 html {
     font-size: 16px;
 }
-body {
-    font-family: Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    background: #cecece;
-    line-height: 20px;
-    color: #333;
-}
 .container {
     width: 1440px;
     max-width: 100%;
@@ -23,12 +16,16 @@ body {
     padding: 0 20px;
 }
 .header {
-    padding: 40px;
     background-image: linear-gradient(to right, #fff, #fefefe);
     padding: 40px 0;
 }
 .main {
     padding: 40px 0;
+    font-family: Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background: #cecece;
+    line-height: 20px;
+    color: #333;
 }
 table {
     border-collapse: collapse;
@@ -94,4 +91,34 @@ form h2 {
 }
 .saveBtn {
     color: green;
+}
+nav ul li a:link, nav ul li a:active, nav ul li a:visited{
+	color: white;
+	text-decoration: none; /*убрал подчёркивание*/
+}
+nav ul li{
+	display: inline; /*отображение в строчку*/
+	/*margin: 5px; отступ полей между рамками*/
+	border-radius: 5px;
+	opacity: 0.5;
+	background-color: #240F14;
+	overflow: visible; /*отображение фулл текста в рамке, в ином случае будет обрезаться*/
+	padding: 15px;
+	border: solid 1px white;
+}
+nav ul li:hover{
+	background-color: #3B1920;
+	padding: 15.5px;
+}
+nav li{
+	/*border: solid 1px red;*/
+	/*border-radius: 20 px;*/
+	/*background-color: #27303D;*/
+	/*color: #27303D;*/
+	padding: 15%;
+	text-align: center;
+}
+nav{
+	white-space: nowrap;
+    margin: -6px 0px 20px 0px;
 }
