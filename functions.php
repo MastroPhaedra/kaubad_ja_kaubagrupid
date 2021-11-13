@@ -1,16 +1,18 @@
-<?php 
+<?php
 
+// nastraivaem podklju4enie k baze dannqh
 require ('conf.php');
 
+// funtsia sortirovki
 function countyData($sort_by = "kaubanimi", $search_term = "") {
 
     global $connection;
 
-    $sort_list = array("kaubanimi", "hind", "kaubagrupp");
+    $sort_list = array("kaubanimi", "hind", "kaubagrupp"); // massiv s nazvaniami po kotorqm budet dostupna sortirovka
 
     if(!in_array($sort_by, $sort_list)) {
 
-        return "Seda tulpa ei saa sorteerida";
+        return "Seda tulpa ei saa sorteerida"; // uvedomlenie na slutsai oshibki
 
     }
 
@@ -22,9 +24,9 @@ function countyData($sort_by = "kaubanimi", $search_term = "") {
 
     AND (kaubanimi LIKE '%$search_term%' OR hind LIKE '%$search_term%' OR kaubagrupp LIKE '%$search_term%')
 
-    ORDER BY $sort_by");
+    ORDER BY $sort_by"); //otpravka zaprosa v bazu dannqh (BD)
 
-    $request->bind_result($id, $product_name, $price, $productGroup_name);
+    $request->bind_result($id, $product_name, $price, $productGroup_name); // polu4ennqe dannqe po zaprosu iz BD priravnivaem k peremennqm v skobkah
 
     $request->execute();
 
@@ -32,17 +34,17 @@ function countyData($sort_by = "kaubanimi", $search_term = "") {
 
     while($request->fetch()) {
 
-        $kaup = new stdClass();
+        $product = new stdClass(); // novii svobodnogo, poka ne opredeljonnogo klassa
 
-        $kaup->id = $id;
+        $product->id = $id; // ID
 
-        $kaup->kaubanimi = htmlspecialchars($product_name);
+        $product->kaubanimi = htmlspecialchars($product_name); // kaubanimi
 
-        $kaup->hind = htmlspecialchars($price);
+        $product->hind = htmlspecialchars($price); // hind
 
-        $kaup->kaubagrupp = $productGroup_name;
+        $product->kaubagrupp = $productGroup_name; //kaubagrupp
 
-        array_push($data, $kaup);
+        array_push($data, $product);
 
     }
 
@@ -50,6 +52,7 @@ function countyData($sort_by = "kaubanimi", $search_term = "") {
 
 }
 
+// funktsia poiska
 function createSelect($query, $name) {
 
     global $connection;
@@ -74,6 +77,7 @@ function createSelect($query, $name) {
 
 }
 
+// funktsia dlja dobavlenia "kaubagrupp" v tablitsi "kaubagrupid"
 function addProductGroup($productGroup_name) {
 
     global $connection;
@@ -88,6 +92,7 @@ function addProductGroup($productGroup_name) {
 
 }
 
+// funktsia dlja dobavlenia "kaubanimi", "hind", "kaubagrupp_id" v tablitsi "kaubad"
 function addProduct($product_name, $price, $productGroup_id) {
 
     global $connection;
@@ -102,19 +107,20 @@ function addProduct($product_name, $price, $productGroup_id) {
 
 }
 
+// funktsia dlja udalenia tovara iz tablitsi "kaubad"
 function deleteProduct($product_id) {
 
     global $connection;
 
     $query = $connection->prepare("DELETE FROM kaubad WHERE id=?");
 
-    $query->bind_param("i", $product_id
-);
+    $query->bind_param("i", $product_id);
 
     $query->execute();
 
 }
 
+// funktsia dlja OBNOVLENIA dannqh tovara v tablitsi "kaubad"
 function saveProduct($product_id, $product_name, $price, $productGroup_id) {
 
     global $connection;
