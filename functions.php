@@ -24,7 +24,7 @@ function countyData($sort_by = "kaubanimi", $search_term = "") {
 
     ORDER BY $sort_by");
 
-    $request->bind_result($id, $kaubanimi, $hind, $kaubagrupp);
+    $request->bind_result($id, $product_name, $price, $productGroup_name);
 
     $request->execute();
 
@@ -36,11 +36,11 @@ function countyData($sort_by = "kaubanimi", $search_term = "") {
 
         $kaup->id = $id;
 
-        $kaup->kaubanimi = htmlspecialchars($kaubanimi);
+        $kaup->kaubanimi = htmlspecialchars($product_name);
 
-        $kaup->hind = htmlspecialchars($hind);
+        $kaup->hind = htmlspecialchars($price);
 
-        $kaup->kaubagrupp = $kaubagrupp;
+        $kaup->kaubagrupp = $productGroup_name;
 
         array_push($data, $kaup);
 
@@ -74,29 +74,29 @@ function createSelect($query, $name) {
 
 }
 
-function addCounty($county_name, $county_centre) {
+function addProductGroup($productGroup_name) {
 
     global $connection;
 
-    $query = $connection->prepare("INSERT INTO maakond (maakonna_nimi, maakonna_keskus)
+    $query = $connection->prepare("INSERT INTO kaubagrupid (kaubagrupp)
 
-    VALUES (?, ?)");
+    VALUES (?)");
 
-    $query->bind_param("si", $county_name, $county_centre);
+    $query->bind_param("s", $productGroup_name);
 
     $query->execute();
 
 }
 
-function addPerson($first_name, $last_name, $county_id) {
+function addProduct($product_name, $price, $productGroup_id) {
 
     global $connection;
 
-    $query = $connection->prepare("INSERT INTO inimene (eesnimi, perekonnanimi, maakonna_id)
+    $query = $connection->prepare("INSERT INTO kaubad (kaubanimi, hind, kaubagrupid.id)
 
     VALUES (?, ?, ?)");
 
-    $query->bind_param("ssd", $first_name, $last_name, $county_id);
+    $query->bind_param("sdi", $product_name, $price, $productGroup_id);
 
     $query->execute();
 
