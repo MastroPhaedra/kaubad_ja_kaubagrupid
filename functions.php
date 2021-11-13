@@ -6,7 +6,7 @@ function countyData($sort_by = "kaubanimi", $search_term = "") {
 
     global $connection;
 
-    $sort_list = array("kaubanimi", "hind", "kaubagrupi_nimi");
+    $sort_list = array("kaubanimi", "hind", "kaubagrupp");
 
     if(!in_array($sort_by, $sort_list)) {
 
@@ -14,17 +14,17 @@ function countyData($sort_by = "kaubanimi", $search_term = "") {
 
     }
 
-    $request = $connection->prepare("SELECT inimene.id, eesnimi, perekonnanimi, maakond.maakonna_nimi
+    $request = $connection->prepare("SELECT kaubad.id, kaubanimi, hind, kaubagrupid.kaubagrupp
 
-    FROM inimene, maakond 
+    FROM kaubad, kaubagrupid 
 
-    WHERE inimene.maakonna_id = maakond.id 
+    WHERE kaubad.id = kaubagrupid.id 
 
-    AND (eesnimi LIKE '%$search_term%' OR perekonnanimi LIKE '%$search_term%' OR maakonna_nimi LIKE '%$search_term%')
+    AND (kaubanimi LIKE '%$search_term%' OR hind LIKE '%$search_term%' OR kaubagrupp LIKE '%$search_term%')
 
     ORDER BY $sort_by");
 
-    $request->bind_result($id, $eesnimi, $perekonnanimi, $maakonna_nimi);
+    $request->bind_result($id, $kaubanimi, $hind, $kaubagrupid);
 
     $request->execute();
 
