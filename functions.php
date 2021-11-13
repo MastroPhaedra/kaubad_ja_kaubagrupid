@@ -24,7 +24,7 @@ function countyData($sort_by = "kaubanimi", $search_term = "") {
 
     ORDER BY $sort_by");
 
-    $request->bind_result($id, $kaubanimi, $hind, $kaubagrupid);
+    $request->bind_result($id, $kaubanimi, $hind, $kaubagrupp);
 
     $request->execute();
 
@@ -32,17 +32,17 @@ function countyData($sort_by = "kaubanimi", $search_term = "") {
 
     while($request->fetch()) {
 
-        $person = new stdClass();
+        $kaup = new stdClass();
 
-        $person->id = $id;
+        $kaup->id = $id;
 
-        $person->eesnimi = htmlspecialchars($eesnimi);
+        $kaup->kaubanimi = htmlspecialchars($kaubanimi);
 
-        $person->perekonnanimi = htmlspecialchars($perekonnanimi);
+        $kaup->hind = htmlspecialchars($hind);
 
-        $person->maakonna_nimi = $maakonna_nimi;
+        $kaup->kaubagrupp = $kaubagrupp;
 
-        array_push($data, $person);
+        array_push($data, $kaup);
 
     }
 
