@@ -2,11 +2,11 @@
 
 require ('conf.php');
 
-function countyData($sort_by = "eesnimi", $search_term = "") {
+function countyData($sort_by = "kaubanimi", $search_term = "") {
 
     global $connection;
 
-    $sort_list = array("eesnimi", "perekonnanimi", "maakonna_nimi");
+    $sort_list = array("kaubanimi", "hind", "kaubagrupi_nimi");
 
     if(!in_array($sort_by, $sort_list)) {
 
