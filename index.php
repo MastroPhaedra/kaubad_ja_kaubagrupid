@@ -8,9 +8,10 @@
 <body>
     <header class="header">
    <p>Admin on sisse logitud</p>
+        <!--
 <form action="logout.php" method="post">
 <input type="submit" value="Logi välja" name="logout">
-</form>
+</form> -->
         <div class="container">
             <h1>Tabelid | Inimesed ja maakond</h1>
         </div>
