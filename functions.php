@@ -18,7 +18,7 @@ function countyData($sort_by = "kaubanimi", $search_term = "") {
 
     FROM kaubad, kaubagrupid 
 
-    WHERE kaubad.id = kaubagrupid.id 
+    WHERE kaubad.xxx = kaubagrupid.id 
 
     AND (kaubanimi LIKE '%$search_term%' OR hind LIKE '%$search_term%' OR kaubagrupp LIKE '%$search_term%')
 
