@@ -23,14 +23,14 @@
             </form>
         </div>
         <?php if(isset($_REQUEST["edit"])): ?>
-            <?php foreach($people as $person): ?>
-                <?php if($person->id == intval($_REQUEST["edit"])): ?>
+            <?php foreach($product as $goods): ?>
+                <?php if($goods->id == intval($_REQUEST["edit"])): ?>
                     <div class="container">
                         <form action="index.php">
-                            <input type="hidden" name="changed_id" value="<?=$person->id ?>"/>
-                            <input type="text" name="eesnimi" value="<?=$person->eesnimi?>">
-                            <input type="text" name="perekonnanimi" value="<?=$person->perekonnanimi?>">
-                            <?php echo createSelect("SELECT id, maakonna_nimi FROM maakond", "maakonna_id"); ?>
+                            <input type="hidden" name="changed_id" value="<?=$goods->id ?>"/>
+                            <input type="text" name="kaubanimi" value="<?=$goods->kaubanimi?>">
+                            <input type="number" name="hind" value="<?=$goods->hind?>">
+                            <?php echo createSelect("SELECT id, kaubagrupp FROM kaubagrupid", "kaubagrupp_id"); ?>
                             <a title="Katkesta muutmine" class="cancelBtn" href="index.php" name="cancel">X</a>                            
                             <input type="submit" name="save" value="&#10004;">
                         </form>
