@@ -102,13 +102,14 @@ function addProduct($product_name, $price, $productGroup_id) {
 
 }
 
-function deletePerson($person_id) {
+function deleteProduct($product_id) {
 
     global $connection;
 
-    $query = $connection->prepare("DELETE FROM inimene WHERE id=?");
+    $query = $connection->prepare("DELETE FROM kaubad WHERE id=?");
 
-    $query->bind_param("i", $person_id);
+    $query->bind_param("i", $product_id
+);
 
     $query->execute();
 
