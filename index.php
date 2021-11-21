@@ -1,11 +1,19 @@
 <?php
+// проверка пользователя
+session_start();
 // nastraivaem podklju4enie k baze dannqh
 require("conf.php");
-//session_start();
-//if (!isset($_SESSION['tuvastamine'])) {
-//   header('Location: login.php');
-//    exit();
-//}
+if (!isset($_SESSION['tuvastamine'])) {
+    //header('Location: ab_login.php');
+    echo "<script>self.location='https://makarov20.thkit.ee/PHP/phpLehestik/content/kaubad_ja_kaubagrupid/ab_login.php';</script>"; //pereadressatsia s pomoshju JS
+    exit();
+}
+if(isset($_POST['logout'])){
+    session_destroy();
+    //header('Location: ab_login.php');
+    echo "<script>self.location='https://makarov20.thkit.ee/PHP/phpLehestik/content/kaubad_ja_kaubagrupid/ab_login.php';</script>"; //pereadressatsia s pomoshju JS
+    exit();
+}
 
 // nfstaivaem podklju4enie k funktsiam
 require("functions.php");
@@ -63,7 +71,7 @@ $product = countyData($sort, $search_term);?>
 <body>
 <header class="header">
     <!-- <div class="header">  <header>  -->
-    <p>Admin on sisse logitud</p> <!-- avtorizatsia -->
+    <p>Kasutaja on sisse logitud</p> <!-- avtorizatsia -->
     <form action="logout.php" method="post">
         <input type="submit" value="Logi välja" name="logout">
     </form><!--  </header> -->
@@ -117,19 +125,19 @@ include('../php_matkaLeht/matk_navigation.php');
                     <td>
                         <a title="Kustuta kaup" class="deleteBtn" href="index.php?delete=<?=$goods->id?>"
                            onclick="return confirm('Oled kindel, et soovid kustutada?');">X</a> <!-- knopka udalenija tovara -->
-                        <a title="Muuda kaupa" class="editBtn" href="index.php?edit=<?=$goods->id?>">&#9998;</a> <!-- knopka iznebebia tovara -->
+                        <a title="Muuda kaupa" class="editBtn" href="index.php?edit=<?=$goods->id?>">&#9998;</a> <!-- knopka izmenenia tovara -->
                     </td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
         </table>
-        <form action="index.php"> <!-- forma dlja dobavlenia tovara -->
+        <!--<form action="index.php">  forma dlja dobavlenia tovara 
             <h2>Kaubagrupi lisamine:</h2>
             <dl>
-                <dd><input type="text" name="kaubagrupp" placeholder="Sisesta kaubagrupi..."></dd> <!-- pole dlja nazvania tipa tovara -->
-                <input type="submit" name="kaubagrupi_lisamine" value="Lisa"> <!-- knopka dla srabatqvaia fuktsii dlja dobavlenia tipa tovara v bazu dannqh -->
+                <dd><input type="text" name="kaubagrupp" placeholder="Sisesta kaubagrupi..."></dd> <!-- pole dlja nazvania tipa tovara 
+                <input type="submit" name="kaubagrupi_lisamine" value="Lisa"> <!-- knopka dla srabatqvaia fuktsii dlja dobavlenia tipa tovara v bazu dannqh 
             </dl>
-        </form>
+        </form> -->
         <form action="index.php">
             <h2>Kauba lisamine:</h2>
             <dl>
@@ -146,6 +154,7 @@ include('../php_matkaLeht/matk_navigation.php');
         </form>
     </div>
 </main>
+<h3><a href="https://github.com/MastroPhaedra/kaubad_ja_kaubagrupid" target="_blank">GitHub</a></h3>
 <?php
 include('../../footer.php');
 ?>
