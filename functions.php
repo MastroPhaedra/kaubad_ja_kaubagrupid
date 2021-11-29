@@ -3,7 +3,7 @@
 // nastraivaem podklju4enie k baze dannqh
 require ('conf.php');
 
-// funtsia sortirovki
+// funtsia sortirovki dlja tovarov
 function countyData($sort_by = "kaubanimi", $search_term = "") {
 
     global $connection;
@@ -45,6 +45,37 @@ function countyData($sort_by = "kaubanimi", $search_term = "") {
         $product->kaubagrupp = $productGroup_name; //kaubagrupp
 
         array_push($data, $product);
+
+    }
+
+    return $data;
+
+}
+
+// funtsia vqlavlivaet vse znatsenia tablitsq "kaubagrupid"
+function product_typeData() {
+
+    global $connection;
+
+    $request = $connection->prepare("SELECT id, kaubagrupp
+
+    FROM kaubagrupid WHERE id>1 ORDER BY id;"); //otpravka zaprosa v bazu dannqh (BD)
+
+    $request->bind_result($id, $productGroup_name); // polu4ennqe dannqe po zaprosu iz BD priravnivaem k peremennqm v skobkah
+
+    $request->execute();
+
+    $data = array();
+
+    while($request->fetch()) {
+
+        $group = new stdClass(); // novii svobodnogo, poka ne opredeljonnogo klassa
+
+        $group->id = $id; // ID
+        
+        $group->kaubagrupp = $productGroup_name; //kaubagrupp
+
+        array_push($data, $group);
 
     }
 
@@ -115,6 +146,19 @@ function deleteProduct($product_id) {
     $query = $connection->prepare("DELETE FROM kaubad WHERE id=?");
 
     $query->bind_param("i", $product_id);
+
+    $query->execute();
+
+}
+//deleteProductType
+// funktsia dlja udalenia tipa tovara iz tablitsi "kaubagrupid"
+function deleteProductType($product_type_id) {
+
+    global $connection;
+
+    $query = $connection->prepare("DELETE FROM kaubagrupid WHERE id=?");
+
+    $query->bind_param("i", $product_type_id);
 
     $query->execute();
 

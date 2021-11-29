@@ -18,7 +18,7 @@ if (!empty($_POST['login']) && !empty($_POST['pass']) && (strlen($_POST['pass'])
     $pass=htmlspecialchars(trim($_POST['pass']));
     $sool='tavalinetext';
     $krypt=crypt($pass, $sool);
-    echo ($krypt);
+    //echo ($krypt);
     //kontroll, et andmebaasis on selline kasutaja
     $paring="SELECT nimi, parool FROM kasutajad WHERE nimi='$login' AND parool='$krypt'";
     $yhendus=mysqli_query($connection, $paring);
@@ -35,34 +35,36 @@ if (!empty($_POST['login']) && !empty($_POST['pass']) && (strlen($_POST['pass'])
                 exit();
             }
         } else {
-            echo "Kasutaja ja parool on valed";
+            echo '<p style="color:red; font-family: Arial, sans-serif; text-align: center;">Kasutaja ja parool on valed</p>';
         }
     /*if($login=='admin' && $pass=='admin'){
         $_SESSION['tuvastamine']='tere';
         header('Location: index.php');
     }*/
 } elseif (strlen($_POST['pass'])<3 && $_POST['login']) {
-        echo "Parool peab olema 3 ja rohkem sümboleid";
+        echo '<p style="color:red; font-family: Arial, sans-serif; text-align: center;">Parool peab olema 3 ja rohkem sümboleid</p>';
     }
 ?>
-<h1>Login vorm</h1>
-<table>
+<link rel="stylesheet" href="login_style.css">
+<title>Login vorm</title>
+<table class="login">
     <form action="" method="post">
+        <tr>
+            <td colspan="2" class="login-header">Login vorm</td>
+        </tr>
         <tr>
             <td>Kasutaja nimi:</td>
             <td><input type="text" name="login" placeholders="Login"></td>
         </tr>
         <tr>
             <td>Salasõna:</td>
-            <td><input type="text" name="pass" placeholders="Salasõna"></td>
+            <td><input type="password" name="pass" placeholders="Salasõna"></td>
         </tr>
         <tr>
-            <td></td>
-            <td><input type="submit" value="Logi sisse"></td>
+            <td colspan="2"><input type="submit" value="Logi sisse"></td>
         </tr>
     </form>
 </table>
-
 <!--
 CREATE TABLE kasutajad (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,

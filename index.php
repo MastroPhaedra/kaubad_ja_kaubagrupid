@@ -147,7 +147,7 @@ include('../php_matkaLeht/matk_navigation.php');
                 <dd><input type="number" name="hind" placeholder="Sisesta hinda..."></dd> <!-- pole dlja tsenq tovara -->
                 <dt>Kaubagrupp</dt>
                 <dd><?php
-                    echo createSelect("SELECT id, kaubagrupp FROM kaubagrupid", "kaubagrupp_id");
+                    echo createSelect("SELECT id, kaubagrupp FROM kaubagrupid ORDER BY id", "kaubagrupp_id");
                     ?></dd> <!-- pole dlja vqbora tipa tovara -->
                 <input type="submit" name="kauba_lisamine" value="Lisa pood"> <!-- knopka dla srabatqvaia fuktsii dlja dobavlenia tovara v bazu dannqh -->
             </dl>
